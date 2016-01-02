@@ -1,0 +1,149 @@
+{% extends "templates/layouts/default.html" %}
+
+{% macro spotifyFollow() %}
+<iframe class="spotify-follow" src="https://embed.spotify.com/follow/1/?uri=spotify:user:1214469573&size=basic&theme=light" width="200" height="25" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+{% endmacro %}
+
+{% macro spotifyPlaylist(uri) %}
+<iframe src="https://embed.spotify.com/?uri={{uri}}" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+{% endmacro %}
+
+{% macro radioPost(post) %}
+<div class="radio-post post-icon grid-item" data-ks-editable="editable(user, { list: " RadioShow ", id: post.id })">
+	<div class="post-icon-inner">
+		<p class="lead text-muted">
+			show {{ post.number }}
+			{% if post.title %}
+				: {{ post.title }}
+			{% endif %}
+		</p>
+		<div class="col-sm-12 col-md-8">
+			<p class="date">{{ post._.publishedDate.format("MMMM Do, YYYY") }}</p>
+		</div>
+		<div class="col-sm-12 col-md-4">
+			<p title="occasionally tracks not available on Spotify are played."><a href="http://www.track-blaster.com/wmbr/playlist.php?id={{ post.playlistId }}">full playlist</a></p>
+		</div>
+		{{ spotifyPlaylist(post.spotifyUri)}}
+		<div class="radio-post-content">
+			{% if post.content %}
+				{{ post.content|safe }}
+			{% else %}
+				<p></p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endmacro %}
+
+{% macro categoryList() %}
+{% if data.categories.length %}
+	<div id="category-list" class="list-group">
+		{% set class = ( "active" if not data.category else "" ) %}
+		<a href="/radio" class="{{ class }} list-group-item">All Shows</a>
+		{% for cat in data.categories %} {% set class = ( "active" if data.category and data.category.id == cat.id else "" ) %}
+			<a href="/radio/{{ cat.key }}" class="{{ class }} list-group-item">{{ cat.name }}</a>
+		{% endfor %}
+	</div>
+{% endif %}
+{% endmacro %}
+
+{% block intro %}
+	<div class="container radio-container page-header">
+		{% set title = ( "Lucid Dreams/"+data.category.name if data.category else "Lucid Dreams" ) %}
+		<h1>{{ title }}</h1>
+		<div class="col-sm-11">
+			<p class="description"> I host a show called Lucid Dreams on <a href="http://wmbr.org/">WMBR 88.1FM</a>, MIT's community radio station. 
+			It airs on alternate Saturdays at 11PM EST. Below are my past show playlists. Follow me on Spotify for more music.
+			{{ spotifyFollow() }}
+			</p>
+		</div>
+	</div>
+{% endblock %}
+	
+{% block content %}
+	<div class="container">
+		<div class="row">
+			<div class="container category-filter">
+				<div class="col-xs-3">
+					{% if filters.category and not data.category %}
+						<h3 class="text-muted">Invalid Category.</h3>
+					{% else %}
+						{% if data.posts.results.length %}
+							{% if data.posts.totalPages > 1 %}
+								<h4 class="text-weight-normal">
+									Showing
+									<strong>{{ data.posts.first }}</strong>
+									to
+									<strong>{{ data.posts.last }}</strong>
+									of
+									<strong>{{ data.posts.total }}</strong>
+									playlists.
+								</h4>
+							{% else %}
+								<h4 class="text-weight-normal">Showing {{ utils.plural(data.posts.results.length, "* playlist") }}.</h4>
+							{% endif %}
+						{% endif %}
+					{% endif %}
+				</div>
+                                <div class="col-xs-9">
+                                        {{ categoryList() }}
+                                </div>
+			</div>
+			{% if data.posts.results.length %}
+				<div class="grid post-container">
+					{% for post in data.posts.results %} {{ radioPost(post) }} {% endfor %}
+				</div>
+				{% if data.posts.totalPages > 1 %}
+					<ul class="pagination">
+						{% if data.posts.previous %}
+							<li>
+								<a href="?page={{ data.posts.previous }}">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+								</a>
+							</li>
+						{% else %}
+							<li class="disabled">
+								<a href="?page=1">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+								</a>
+							</li>
+						{% endif %}
+						{% for p in data.posts.pages %} {% set class = ( "active" if data.posts.currentPage == p else "" ) %}
+							<li class="{{ class }}">
+								{% set page = ( (data.posts.totalPages if i else 1) if p == "..." else p ) %}
+								<a href="?page={{ page }}">{{ p }}</a>
+							</li>
+						{% endfor %}
+						{% if data.posts.next %}
+							<li>
+								<a href="?page={{ data.posts.next }}">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</a>
+							</li>
+						{% else %}
+							<li class="disabled">
+								<a href="?page={{ data.posts.totalPages }}">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</a>
+							</li>
+						{% endif %}
+					</ul>
+				{% endif %}
+			{% else %}
+				{% if data.category %}
+					<h3 class="text-muted">There are no posts in the category {{ data.category.name }}.</h3>
+				{% else %}
+					<h3 class="text-muted">There are no posts yet.</h3>
+				{% endif %}
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.js"></script>
+	<script>
+		$('.grid').masonry({columnWidth: '.grid-item', itemSelector: '.grid-item'});
+	</script>
+{% endblock %}
+
