@@ -17,10 +17,10 @@
 				: {{ post.title }}
 			{% endif %}
 		</p>
-		<div class="col-sm-12 col-md-8">
+		<div class="col-sm-12 col-md-7">
 			<p class="date">{{ post._.publishedDate.format("MMMM Do, YYYY") }}</p>
 		</div>
-		<div class="col-sm-12 col-md-4">
+		<div class="col-sm-12 col-md-5">
 			<p title="occasionally tracks not available on Spotify are played."><a href="http://www.track-blaster.com/wmbr/playlist.php?id={{ post.playlistId }}">full playlist</a></p>
 		</div>
 		{{ spotifyPlaylist(post.spotifyUri)}}
