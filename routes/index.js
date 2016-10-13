@@ -41,7 +41,8 @@ exports = module.exports = function(app) {
 	app.get('/gallery', routes.views.gallery);
 	app.get('/radio', routes.views.radio);
 	app.get('/radio/:category?', routes.views.radio);
-	app.all('/contact', routes.views.contact);
+	app.get('/bio', routes.views.bio);
+	app.all('/misc', routes.views.misc);
 	
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);

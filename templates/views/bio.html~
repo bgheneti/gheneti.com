@@ -1,0 +1,69 @@
+{% extends "templates/layouts/default.html" %}
+
+{% block intro %}
+	<div class="container page-header">
+		<h1>Contact Me</h1>
+	</div>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		{% if enquirySubmitted %}
+			<h3>Thanks for getting in touch.</h3>
+		{% else %}
+			<div class="row">
+                                <div class="col-sm-1 col-md-offset-1">
+                                        <img src="images/haircut.png"></img>
+                                </div>
+				<div class="col-sm-10">
+					<form method="post" class="form-horizontal">
+						<input type="hidden" name="action" value="contact">
+						{% set class = ( "has-error" if validationErrors.name else "" ) %}
+						<div class="form-group {{ class }}">
+							<label class="col-sm-2 text-left control-label">Name</label>
+							<div class="col-sm-10">
+								<input type="text" name="name.full" value="{{ formData["name.full"] }}" class="form-control">
+							</div>
+						</div>
+						{% set class = ( "has-error" if validationErrors.email else "" ) %}
+						<div class="form-group {{ class }}">
+                                                        <label class="col-sm-2 text-left control-label">Email</label>
+							<div class="col-sm-10">
+								<input type="email" name="email" value="{{ formData.email }}" class="form-control">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 text-left control-label">Phone</label>
+							<div class="col-sm-10">
+								<input type="text" name="phone" value="{{ formData.phone }}" placeholder="(optional)" class="form-control">
+							</div>
+						</div>
+						{% set class = ( "has-error" if validationErrors.enquiryType else "" ) %}
+						<div class="form-group {{ class }}">
+							<label class="col-sm-2 text-left control-label">Subject</label>
+							<div class="col-sm-10">
+								<select name="enquiryType" class="form-control">
+									<option value="">(select one)</option>
+									{% for type in enquiryTypes %}
+										{% set selected = ( 'selected="selected"' if formData.enquiryType == type.value else "" ) %}
+										<option value="{{type.value}}" {{ selected }}>{{ type.label }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+						{% set class = ( "has-error" if validationErrors.message else "" ) %}
+						<div class="form-group {{ class }}">
+							<label class="col-sm-2 text-left control-label">Message</label>
+							<div class="col-sm-10">
+								<textarea name="message" placeholder="Leave me a message..." rows="4" class="form-control">{{ formData.message }}</textarea>
+							</div>
+						</div>
+						<div class="contact-form-submit form-actions col-sm-10 col-sm-offset-2">
+							<button type="submit" class="btn btn-primary">Send</button>
+						</div>
+					</form>
+				</div>
+			</div>	
+		{% endif %}
+	</div>
+{% endblock %}

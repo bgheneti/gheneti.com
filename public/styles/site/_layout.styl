@@ -1,21 +1,52 @@
 #header
-	margin-top: 30px
+	margin-top: 10px
 
 #footer
 	border-top: 1px solid gray-lighter
 	padding-top: 30px
 	color: gray-light
 	text-decoration: none
-	border-top: 2px solid #BAC0BC
+	border-top: 2px solid black // #BAC0BC
 	margin-top: 100px
 
 body
 	padding-top: 50px
-	background-color: background-color
+	//background-color: background-color
 	font-family: roboto
 	font-size: font-size-base
 	.description
+		padding-left: 3px
 		font-size: description-font-size
+
+.bio
+	h3
+		font-weight: normal
+		font-size: 24px
+	img
+		height: 32px
+		margin-top: 10px
+		opacity: .5
+		margin-right: 15px
+	img:hover
+		opacity: 1
+
+body.home
+	background-color: #FAFAFA
+	background-size: 90vw
+	background-position: center top
+	background-repeat: no-repeat
+	text-align: center
+	.shining
+		margin-top: 15vh
+		width: 100%
+	table
+		margin-top: 15vh
+		img
+			margin-right: 3vw
+			margin-left: 3vw
+		h3
+			font-size: 26px
+			margin-top: 10px
 
 h2, h3, h4, h5, h6, .h2, .h3, .h4, .h5, .h6
 	font-family: roboto
@@ -27,13 +58,13 @@ h1, .h1
 	font-weight: 400
 
 .navbar-default
-	background-color: nav-background-color
-	border-bottom-width: 1px
+	background-color: white
+	border-bottom: none
 	.navbar-brand
 		background-color: nav-background-active-color
 		color: brand-color
 		font: nav-font, bold
-		border-right: 3px solid nav-background-color
+		border-right: 3px solid white // nav-background-color
 	.navbar-brand:hover
 		background-color: nav-background-active-color
 		color: brand-color
@@ -53,7 +84,7 @@ h1, .h1
 .page-header
 	margin-top: 0px
 	margin-bottom: 50px
-	border-bottom: 2px solid #BAC0BC
+	border-bottom: 2px solid black // #BAC0BC
 
 #post-container
 	width: 100%
@@ -68,8 +99,6 @@ h1, .h1
 	width: 32.5%
 	float: left
 	border: 2px solid #ECECEC
-	.radio-post
-		width: 23%
 	a:hover
 		text-decoration: none
 		color: #333
@@ -79,12 +108,9 @@ h1, .h1
 		width: auto
 		max-width: 100%
 
-.spotify-follow
-	padding-top: 2px
-
 .radio-post
-	width: 320px
-	padding: 8px
+	padding: 0px
+	width: 304px
 	.radio-post-content
 		margin: 0px
 		min-height: 20px	
@@ -93,11 +119,11 @@ h1, .h1
 
 .container
 	@media (min-width: 768px) 
-		width: 660px
+		width: 629px
 	@media (min-width: 992px)
-		width: 990px
+		width: 942px
 	@media (min-width: 1200px)
-		width: 1320px
+		width: 1258px
 	.lead
 		font-size: 22px
 		margin-left: 15px

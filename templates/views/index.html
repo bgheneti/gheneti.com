@@ -1,34 +1,52 @@
-{% extends "templates/layouts/default.html" %}
+<!DOCTYPE html>
+<!-- saved from url=(0023)http://www.gheneti.com/ -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-{% block content %}
-	<div class="container">
-		<div class="jumbotron">
-			<img src="/images/logo.svg" width="160">
-			<h1>Welcome</h1>
-			<p>This is your new <a href="http://keystonejs.com" target="_blank">KeystoneJS</a> website.</p>
-			<p>
-				It includes the latest versions of
-				<a href="http://getbootstrap.com/" target="_blank">Bootstrap</a>
-				and <a href="http://www.jquery.com/" target="_blank">jQuery</a>.
-			</p>
-			<p>Visit the <a href="http://keystonejs.com/guide" target="_blank">Getting Started</a> guide to learn how to customise it.</p>
-			<hr>
-			{% if user and user.canAccessKeystone %}
-				<p>
-					<a href="/keystone" class="btn btn-lg btn-primary">Open the Admin UI</a>
-				</p>
-			{% else %}
-				<p>We have created a default Admin user for you with the email <strong>banti@gheneti.com</strong> and the password <strong>WG6651170</strong>.</p>
-				<p>
-					<a href="/keystone/signin" style="margin-right: 10px" class="btn btn-lg btn-primary">Sign in</a>
-					to use the Admin UI.
-				</p>
-			{% endif %}
-			<hr>
-			<p>
-				Remember to <a href="https://github.com/keystonejs/keystone" target="_blank">Star KeystoneJS on GitHub</a> and
-				<a href="https://twitter.com/keystonejs" target="_blank">follow @keystonejs</a> on twitter for updates.
-			</p>
-		</div>
-	</div>
-{% endblock %}
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>{{ title|default("ghenetiCom") }}</title>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,500,700,900' rel='stylesheet' type='text/css'>
+
+        {# Customise the stylesheet for your site by editing /public/styles/site.sass #}
+        <link href="/styles/site.css" rel="stylesheet">
+
+        {# This file provides the default styling for the KeystoneJS Content Editor #}
+        {% if user and user.canAccessKeystone %}
+                <link href="/keystone/styles/content/editor.min.css" rel="stylesheet">
+        {% endif %}
+
+        {# HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+           Safely remove this block if you are not targeting IE8 #}
+        <!--[if lt IE 9]>
+                <script src="//cdn.jsdelivr.net/html5shiv/3.7.3/html5shiv.js"></script>
+                <script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        {# Include template-specific stylesheets by extending the css block #}
+        {% block css %}{% endblock %}
+
+        {# Add any other template-specific HEAD tags by extending the head block #}
+        {% block head %}{% endblock %}
+</head>
+
+<body class="home">
+<img class="shining" src="/images/shining.png">
+<table style="padding-top:75vh; height:19vh" align="center" valign="bottom">
+	<tbody><tr>
+        {% for link in navLinks %}
+                {% if link.key!='home' %}
+                        <td>
+                                <a href="{{ link.href }}"><img src="/icons/{{ link.key }}.gif" height="70" onmouseenter="this.src='/icons/{{ link.key }}_on.gif'" onmouseleave="this.src='/icons/{{ link.key }}.gif';"></a>
+        		<h3>{{ link.key}}</h3>
+                        </td>
+                {% endif %}
+        {% endfor %}
+</tr></tbody></table>
+</div>
+</body>
+</html>

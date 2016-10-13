@@ -1,7 +1,7 @@
 {% extends "templates/layouts/default.html" %}
 
 {% macro spotifyFollow() %}
-<iframe class="spotify-follow" src="https://embed.spotify.com/follow/1/?uri=spotify:user:1214469573&size=basic&theme=light" width="200" height="25" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+<iframe class="spotify-follow" src="https://embed.spotify.com/follow/1/?uri=spotify:user:1214469573&size=basic&theme=light" width="200" height="25" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true" align="top"></iframe>
 {% endmacro %}
 
 {% macro spotifyPlaylist(uri) %}
@@ -12,7 +12,7 @@
 <div class="radio-post post-icon grid-item" data-ks-editable="editable(user, { list: " RadioShow ", id: post.id })">
 	<div class="post-icon-inner">
 		<p class="lead text-muted">
-			show {{ post.number }}
+			{{ post.number }}
 			{% if post.title %}
 				: {{ post.title }}
 			{% endif %}
@@ -51,9 +51,9 @@
 	<div class="container radio-container page-header">
 		{% set title = ( "Lucid Dreams/"+data.category.name if data.category else "Lucid Dreams" ) %}
 		<h1>{{ title }}</h1>
-		<div class="col-sm-11">
-			<p class="description"> I host a show called Lucid Dreams on <a href="http://wmbr.org/">WMBR 88.1FM</a>, MIT's community radio station. 
-			It airs on alternate Saturdays at 11PM EST. Below are my past show playlists. Follow me on Spotify for more music.
+		<div class="col-sm-12 description">
+			<p> I host a show called Lucid Dreams on <a href="http://wmbr.org/">WMBR 88.1FM</a>, MIT's community radio station. 
+			It airs on alternate Fridays at 8PM EST. Below are my past show playlists. Follow me on Spotify for more music.
 			{{ spotifyFollow() }}
 			</p>
 		</div>
@@ -64,7 +64,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="container category-filter">
-				<div class="col-xs-3">
+				<div class="col-xs-6">
 					{% if filters.category and not data.category %}
 						<h3 class="text-muted">Invalid Category.</h3>
 					{% else %}
@@ -85,7 +85,7 @@
 						{% endif %}
 					{% endif %}
 				</div>
-                                <div class="col-xs-9">
+                                <div class="col-xs-6">
                                         {{ categoryList() }}
                                 </div>
 			</div>
